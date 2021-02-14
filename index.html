@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Etch-a-Sketch</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
+        <link href="main.css" rel="stylesheet">
+        </head>
+    <grid class="container-grid">
+        <header class='left'>
+            <section class="left-column">
+                <h1 id="title">ETCH-A-SKETCH
+                </h1>      
+                <section id='button-container'>
+                    <button class="button" id="reset">Enter Grid Size / Reset</button>
+                </section>
+            </section> 
+        </header> 
+        <body class="right">
+            <div id="grid">
+            </div>
+                
+            <script>
+                function enterGridSide() {
+                    let input = prompt('Please enter the required grid size', 50);  
+                    while (input >= 100) {
+                        input = prompt('Please enter the required grid size', 50);
+                    } 
+                    return input;
+                }
+                let gridSide;
+                let gridSize;
+                let squareSize;
+                let squareChild = []
+                const grid = document.querySelector('div');
+                const button = document.querySelector('button');
+                button.addEventListener('click', () => {
+                    for (i = 0; i < gridSize; i++) {
+                        grid.removeChild(squareChild[i]);
+                    }
+                    gridSide = enterGridSide();
+                    gridSize = gridSide * gridSide;
+                    squareSize = (100/gridSide)
+                    for (i = 0; i < gridSize; i++) {
+                        squareChild[i] = document.createElement('div');
+                        squareChild[i].setAttribute('class', 'square');
+                        squareChild[i].style.width = squareSize + '%';
+                        squareChild[i].style.height = squareSize + '%';
+                        grid.appendChild(squareChild[i]);
+                    }
+                    const squares = document.querySelectorAll('div.square');
+                    squares.forEach((square) => {
+                        square.addEventListener('mouseenter', () => {
+                            square.style.background = 'orange';
+                        });
+                    }); 
+                });
+            </script>
+        </body>
+    </grid>
+</html>
