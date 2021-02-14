@@ -13,7 +13,8 @@
                 <h1 id="title">ETCH-A-SKETCH
                 </h1>      
                 <section id='button-container'>
-                    <button class="button" id="reset">Enter Grid Size / Reset</button>
+                    <button class="button" id="normal">Enter Grid Size / <br>Reset (Standard)</button>
+                    <button class="button" id="rgb">Enter Grid Size / <br>Reset (Rainbow)</button>
                 </section>
             </section> 
         </header> 
@@ -29,32 +30,48 @@
                     } 
                     return input;
                 }
+                function randomRGB() {
+                    return Math.floor(Math.random() * Math.floor(256));
+                }
+                function getcolor(buttonID) {
+                    if (buttonID === 'rgb') {
+                        return 'rgb('+ randomRGB() +','+ randomRGB() +','+ randomRGB() +')';
+                    } else if (buttonID === 'normal') {
+                        return 'orange'
+                    }
+                    
+                }
                 let gridSide;
                 let gridSize;
                 let squareSize;
                 let squareChild = []
                 const grid = document.querySelector('div');
-                const button = document.querySelector('button');
-                button.addEventListener('click', () => {
-                    for (i = 0; i < gridSize; i++) {
-                        grid.removeChild(squareChild[i]);
-                    }
-                    gridSide = enterGridSide();
-                    gridSize = gridSide * gridSide;
-                    squareSize = (100/gridSide)
-                    for (i = 0; i < gridSize; i++) {
-                        squareChild[i] = document.createElement('div');
-                        squareChild[i].setAttribute('class', 'square');
-                        squareChild[i].style.width = squareSize + '%';
-                        squareChild[i].style.height = squareSize + '%';
-                        grid.appendChild(squareChild[i]);
-                    }
-                    const squares = document.querySelectorAll('div.square');
-                    squares.forEach((square) => {
-                        square.addEventListener('mouseenter', () => {
-                            square.style.background = 'orange';
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        for (i = 0; i < gridSize; i++) {
+                            grid.removeChild(squareChild[i]);
+                        }
+                        gridSide = enterGridSide();
+                        gridSize = gridSide * gridSide;
+                        squareSize = (100/gridSide)
+                        for (i = 0; i < gridSize; i++) {
+                            squareChild[i] = document.createElement('div');
+                            squareChild[i].setAttribute('class', 'square');
+                            squareChild[i].style.width = squareSize + '%';
+                            squareChild[i].style.height = squareSize + '%';
+                            grid.appendChild(squareChild[i]);
+                        }
+                        const squares = document.querySelectorAll('div.square');
+                        squares.forEach((square) => {
+                            square.addEventListener('mouseenter', () => {                                
+                                square.style.background = getcolor(button.id);
+                            });
                         });
-                    }); 
+                                                     
+                                    
+                         
+                    });
                 });
             </script>
         </body>
